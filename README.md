@@ -1,5 +1,6 @@
 # pysetenv
 
+[![PyPi version][pypi-image]][pypi-link]
 [![Travis build status][travis-image]][travis-link]
 [![Appveyor build status][appveyor-image]][appveyor-link]
 [![Coverage status][codecov-image]][codecov-link]
@@ -19,6 +20,8 @@ command.
 
 This project is licensed under the [BSD 3-clause license](LICENSE).
 
+[pypi-image]: https://img.shields.io/pypi/v/pysetenv.svg
+[pypi-link]: https://pypi.python.org/pypi/pysetenv
 [travis-image]: https://travis-ci.org/jimporter/pysetenv.svg?branch=master
 [travis-link]: https://travis-ci.org/jimporter/pysetenv
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/63t32hh6df519788/branch/master?svg=true
