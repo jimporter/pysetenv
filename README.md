@@ -4,11 +4,16 @@
 [![Appveyor build status][appveyor-image]][appveyor-link]
 [![Coverage status][codecov-image]][codecov-link]
 
-
 **pysetenv** is a simple Python-based program to allow users to set environment
 variables before executing a command. While it's cross-platform, it's primarily
 designed to be used on Windows, where `cmd.exe` makes this considerably more
 difficult than on POSIX systems.
+
+## Why?
+
+pysetenv is designed as a support package to help authors of other Python
+packages create command-line strings like you'd expect from `sh` or the `env`
+command.
 
 ## License
 
