@@ -14,7 +14,16 @@ difficult than on POSIX systems.
 
 pysetenv is designed as a support package to help authors of other Python
 packages create command-line strings like you'd expect from `sh` or the `env`
-command.
+command. Generally, pysetenv will only be installed on Windows systems, with
+POSIX systems using `sh` or `env`. For example, in your `setup.py`, you would
+write:
+
+```python
+setup(
+    # ...
+    install_requires=['pysetenv;platform_system=="Windows"'],
+)
+```
 
 ## License
 
