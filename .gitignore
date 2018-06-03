@@ -1,0 +1,7 @@
+*.pyc
+/.coverage
+/.coverage.*
+/pysetenv.egg-info/
+/build/
+/htmlcov/
+/dist/

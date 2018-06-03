@@ -1,0 +1,15 @@
+[run]
+source = pysetenv
+parallel = True
+
+[paths]
+source =
+  pysetenv/
+  /usr/local/lib/*/site-packages/pysetenv/
+
+[report]
+exclude_lines =
+  pragma: no cover
+  raise NotImplementedError
+  return NotImplemented
+  def __repr__
