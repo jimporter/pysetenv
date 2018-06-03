@@ -1,0 +1,54 @@
+language: python
+sudo: false
+
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+os:
+  - linux
+env:
+  global:
+    - PYTHON=python
+    - PIP=pip
+
+matrix:
+  include:
+
+    # macOS builds
+
+    - language: generic
+      python: 2.7
+      os: osx
+      env: PYTHON=python2 PIP=pip2
+    - language: generic
+      python: 3.6
+      os: osx
+      env: PYTHON=python3 PIP=pip3
+
+    # Linting
+
+    - python: 3.6
+      os: linux
+      env: JOB=lint
+      script: ${PYTHON} setup.py lint
+      after_success: false
+
+before_install:
+  - set -e
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+      shell_session_update() { :; }
+      brew update
+      if [ "${PYTHON}" = "python3" ]; then
+        brew install ${PYTHON} || brew upgrade ${PYTHON}
+      fi
+      cp test/scripts/sitecustomize.py .
+    fi
+install:
+  - ${PIP} install codecov .[test]
+script:
+  - ${PYTHON} setup.py coverage -q
+after_success:
+  - codecov
