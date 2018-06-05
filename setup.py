@@ -75,7 +75,7 @@ setup(
                  'a command'),
     long_description=long_desc,
     keywords='set environment variables',
-    url='https://jimporter.github.io/bfg9000/',
+    url='https://github.com/jimporter/pysetenv',
 
     author='Jim Porter',
     author_email='itsjimporter@gmail.com',
