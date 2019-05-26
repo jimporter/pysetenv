@@ -1,10 +1,11 @@
 language: python
+dist: xenial
 
 python:
   - 2.7
-  - 3.4
   - 3.5
   - 3.6
+  - 3.7
 os:
   - linux
 env:
@@ -22,13 +23,13 @@ matrix:
       os: osx
       env: PYTHON=python2 PIP=pip2
     - language: generic
-      python: 3.6
+      python: 3.7
       os: osx
       env: PYTHON=python3 PIP=pip3
 
     # Linting
 
-    - python: 3.6
+    - python: 3.7
       os: linux
       env: JOB=lint
       script: ${PYTHON} setup.py lint
