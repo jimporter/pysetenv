@@ -31,28 +31,102 @@ class TestSetEnv(unittest.TestCase):
         self.assertEqual(self.assertPopen(command, *args, **kwargs), output)
 
     def test_no_args(self):
-        self.assertOutput(
-            ['pysetenv'],
-            output='pysetenv: COMMAND is required\n',
-            returncode=1
-        )
+        output = self.assertPopen(['pysetenv'])
+        self.assertTrue('PATH={}\n'.format(os.environ['PATH']) in output)
 
-    def test_no_command(self):
-        self.assertOutput(
-            ['pysetenv', 'FOO=bar'],
-            output='pysetenv: COMMAND is required\n',
-            returncode=1
-        )
+    def test_def_var(self):
+        output = self.assertPopen(['pysetenv', 'FOO=bar'])
+        self.assertTrue('FOO=bar\n' in output)
+
+        output = self.assertPopen(['pysetenv', '--', 'FOO=bar'])
+        self.assertTrue('FOO=bar\n' in output)
+
+        output = self.assertPopen(['pysetenv', 'PATH=path'])
+        self.assertTrue('PATH=path\n' in output)
+
+    def test_undef_var(self):
+        output = self.assertPopen(['pysetenv', '-uPATH'])
+        self.assertFalse('PATH={}\n'.format('PATH', os.environ['PATH'])
+                         in output)
+
+        output = self.assertPopen(['pysetenv', '-uPATH', 'PATH=path'])
+        self.assertTrue('PATH=path\n' in output)
+
+        output = self.assertPopen(['pysetenv', '-uPATH', '--', 'PATH=path'])
+        self.assertTrue('PATH=path\n' in output)
+
+    def test_ignore_environment(self):
+        self.assertOutput(['pysetenv', '-i'], '')
+
+    def test_ignore_environment_def_var(self):
+        self.assertOutput(['pysetenv', '-i', 'FOO=bar'], 'FOO=bar\n')
+        self.assertOutput(['pysetenv', '-i', '--', 'FOO=bar'], 'FOO=bar\n')
 
     def test_command(self):
+        self.assertOutput(
+            ['pysetenv', sys.executable, '-c', 'print("hi")'],
+            output='hi\n'
+        )
         self.assertOutput(
             ['pysetenv', '--', sys.executable, '-c', 'print("hi")'],
             output='hi\n'
         )
 
-    def test_command_and_args(self):
+    def test_def_var_command(self):
+        self.assertOutput(
+            ['pysetenv', 'FOO=bar', sys.executable, '-c',
+             'import os; print(os.environ["FOO"])'],
+            output='bar\n'
+        )
         self.assertOutput(
             ['pysetenv', '--', 'FOO=bar', sys.executable, '-c',
              'import os; print(os.environ["FOO"])'],
             output='bar\n'
+        )
+
+    def test_undef_var_command(self):
+        self.assertOutput(
+            ['pysetenv', '-uPATH', sys.executable, '-c',
+             'import os; print(os.environ.get("PATH"))'],
+            output='None\n'
+        )
+        self.assertOutput(
+            ['pysetenv', '-uPATH', '--', sys.executable, '-c',
+             'import os; print(os.environ.get("PATH"))'],
+            output='None\n'
+        )
+
+        self.assertOutput(
+            ['pysetenv', '-uPATH', 'PATH=path', sys.executable, '-c',
+             'import os; print(os.environ["PATH"])'],
+            output='path\n'
+        )
+        self.assertOutput(
+            ['pysetenv', '-uPATH', '--', 'PATH=path', sys.executable, '-c',
+             'import os; print(os.environ["PATH"])'],
+            output='path\n'
+        )
+
+    def test_ignore_environment_command(self):
+        self.assertOutput(
+            ['pysetenv', '-i', sys.executable, '-c',
+             'import os; print(os.environ.get("PATH"))'],
+            output='None\n'
+        )
+        self.assertOutput(
+            ['pysetenv', '-i', '--', sys.executable, '-c',
+             'import os; print(os.environ.get("PATH"))'],
+            output='None\n'
+        )
+
+    def test_ignore_environment_def_varcommand(self):
+        self.assertOutput(
+            ['pysetenv', '-i', 'PATH=path', sys.executable, '-c',
+             'import os; print(os.environ["PATH"])'],
+            output='path\n'
+        )
+        self.assertOutput(
+            ['pysetenv', '-i', '--', 'PATH=path', sys.executable, '-c',
+             'import os; print(os.environ["PATH"])'],
+            output='path\n'
         )

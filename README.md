@@ -6,9 +6,7 @@
 [![Coverage status][codecov-image]][codecov-link]
 
 **pysetenv** is a simple Python-based program to allow users to set environment
-variables before executing a command. While it's cross-platform, it's primarily
-designed to be used on Windows, where `cmd.exe` makes this considerably more
-difficult than on POSIX systems.
+variables before executing a command, similar to the POSIX [`env`][env] command.
 
 ## Why?
 
@@ -25,6 +23,34 @@ setup(
 )
 ```
 
+Then somewhere in your code, you could call pysetenv:
+
+```python
+subprocess.call(['pysetenv', ...])
+```
+
+## Command-line reference
+
+Usage: `pysetenv [OPTION]... [NAME=VALUE]... [COMMAND [ARG]...]`
+
+pysetenv supports a subset of common options available to various
+implementations of `env`. It executes `COMMAND` with any supplied arguments
+(`ARG`) after modifying the environment as specified by the previous arguments.
+Any arguments of the form `NAME=VALUE` will set an environment variable `NAME`
+to the value of `VALUE`. If `COMMAND` is not specified, pysetenv will print the
+resulting environment instead.
+
+In addition, the following options are supported:
+
+* `-i`: Ignore any environment variables inherited by this process
+* `-u NAME`: Unset the environment variable `NAME`
+* `-h`, `--help`: Show a help message and exit
+* `--version`: Show the current version and exit
+
+As an extension to the `env` command, the options above can be separated from
+the section for defining environment variables and/or the command to run with
+`--`.
+
 ## License
 
 This project is licensed under the [BSD 3-clause license](LICENSE).
@@ -37,3 +63,4 @@ This project is licensed under the [BSD 3-clause license](LICENSE).
 [appveyor-link]: https://ci.appveyor.com/project/jimporter/pysetenv/branch/master
 [codecov-image]: https://codecov.io/gh/jimporter/pysetenv/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/jimporter/pysetenv
+[env]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html
