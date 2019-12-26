@@ -38,7 +38,7 @@ class TestSetEnv(unittest.TestCase):
         output = self.assertPopen(['pysetenv', 'FOO=bar'])
         self.assertTrue('FOO=bar\n' in output)
 
-        output = self.assertPopen(['pysetenv', '--', 'FOO=bar'])
+        output = self.assertPopen(['pysetenv', 'FOO=bar', '--'])
         self.assertTrue('FOO=bar\n' in output)
 
         output = self.assertPopen(['pysetenv', 'PATH=path'])
@@ -52,7 +52,7 @@ class TestSetEnv(unittest.TestCase):
         output = self.assertPopen(['pysetenv', '-uPATH', 'PATH=path'])
         self.assertTrue('PATH=path\n' in output)
 
-        output = self.assertPopen(['pysetenv', '-uPATH', '--', 'PATH=path'])
+        output = self.assertPopen(['pysetenv', '-uPATH', 'PATH=path', '--'])
         self.assertTrue('PATH=path\n' in output)
 
     def test_ignore_environment(self):
@@ -60,7 +60,7 @@ class TestSetEnv(unittest.TestCase):
 
     def test_ignore_environment_def_var(self):
         self.assertOutput(['pysetenv', '-i', 'FOO=bar'], 'FOO=bar\n')
-        self.assertOutput(['pysetenv', '-i', '--', 'FOO=bar'], 'FOO=bar\n')
+        self.assertOutput(['pysetenv', '-i', 'FOO=bar', '--'], 'FOO=bar\n')
 
     def test_command(self):
         self.assertOutput(
@@ -79,7 +79,7 @@ class TestSetEnv(unittest.TestCase):
             output='bar\n'
         )
         self.assertOutput(
-            ['pysetenv', '--', 'FOO=bar', sys.executable, '-c',
+            ['pysetenv', 'FOO=bar', '--', sys.executable, '-c',
              'import os; print(os.environ["FOO"])'],
             output='bar\n'
         )
@@ -102,7 +102,7 @@ class TestSetEnv(unittest.TestCase):
             output='path\n'
         )
         self.assertOutput(
-            ['pysetenv', '-uPATH', '--', 'PATH=path', sys.executable, '-c',
+            ['pysetenv', '-uPATH', 'PATH=path', '--', sys.executable, '-c',
              'import os; print(os.environ["PATH"])'],
             output='path\n'
         )
@@ -126,7 +126,7 @@ class TestSetEnv(unittest.TestCase):
             output='path\n'
         )
         self.assertOutput(
-            ['pysetenv', '-i', '--', 'PATH=path', sys.executable, '-c',
+            ['pysetenv', '-i', 'PATH=path', '--', sys.executable, '-c',
              'import os; print(os.environ["PATH"])'],
             output='path\n'
         )

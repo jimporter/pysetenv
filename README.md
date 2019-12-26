@@ -31,7 +31,7 @@ subprocess.call(['pysetenv', ...])
 
 ## Command-line reference
 
-Usage: `pysetenv [OPTION]... [NAME=VALUE]... [COMMAND [ARG]...]`
+Usage: `pysetenv [OPTION]... [NAME=VALUE]... [--] [COMMAND [ARG]...]`
 
 pysetenv supports a subset of common options available to various
 implementations of `env`. It executes `COMMAND` with any supplied arguments
@@ -47,9 +47,13 @@ In addition, the following options are supported:
 * `-h`, `--help`: Show a help message and exit
 * `--version`: Show the current version and exit
 
-As an extension to the `env` command, the options above can be separated from
-the section for defining environment variables and/or the command to run with
-`--`.
+As an extension to the `env` command, the options above and the variable
+definitions can be separated from the section for defining the command to run
+with `--`:
+
+```sh
+pysetenv -uFOO BAR=value -- echo hello
+```
 
 ## License
 

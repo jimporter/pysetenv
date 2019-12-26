@@ -8,7 +8,7 @@ from .version import version
 def main():
     parser = argparse.ArgumentParser(
         prog='pysetenv',
-        usage='%(prog)s [OPTION]... [NAME=VALUE]... [COMMAND [ARG]...]',
+        usage='%(prog)s [OPTION]... [NAME=VALUE]... [--] [COMMAND [ARG]...]',
         description=('Set each NAME to VALUE in the environment and run ' +
                      'COMMAND. If COMMAND is not specified, print the ' +
                      'resulting environment instead.')
@@ -30,17 +30,20 @@ def main():
     for undef in args.undef:
         os.environ.pop(undef, None)
 
+    i = -1
     for i, val in enumerate(args.args):
-        if i == 0 and val == '--':
-            continue
         name, sep, value = val.partition('=')
         if sep:
             os.environ[name] = value
         else:
+            if val == '--':
+                i += 1
             break
     else:
+        i += 1
+
+    if i == len(args.args):
         for i in os.environ:
             print('{}={}'.format(i, os.environ[i]))
         return 0
-
     return subprocess.call(args.args[i:])
