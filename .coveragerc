@@ -1,6 +1,7 @@
 [run]
 source = pysetenv
 parallel = True
+branch = True
 
 [paths]
 source =
