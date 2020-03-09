@@ -1,8 +1,7 @@
 # pysetenv
 
 [![PyPi version][pypi-image]][pypi-link]
-[![Travis build status][travis-image]][travis-link]
-[![Appveyor build status][appveyor-image]][appveyor-link]
+[![Build status][ci-image]][ci-link]
 [![Coverage status][codecov-image]][codecov-link]
 
 **pysetenv** is a simple Python-based program to allow users to set environment
@@ -61,10 +60,8 @@ This project is licensed under the [BSD 3-clause license](LICENSE).
 
 [pypi-image]: https://img.shields.io/pypi/v/pysetenv.svg
 [pypi-link]: https://pypi.python.org/pypi/pysetenv
-[travis-image]: https://travis-ci.org/jimporter/pysetenv.svg?branch=master
-[travis-link]: https://travis-ci.org/jimporter/pysetenv
-[appveyor-image]: https://ci.appveyor.com/api/projects/status/63t32hh6df519788/branch/master?svg=true
-[appveyor-link]: https://ci.appveyor.com/project/jimporter/pysetenv/branch/master
+[ci-image]: https://github.com/jimporter/pysetenv/workflows/build/badge.svg
+[ci-link]: https://github.com/jimporter/pysetenv/actions?query=branch%3Amaster+workflow%3Abuild
 [codecov-image]: https://codecov.io/gh/jimporter/pysetenv/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/jimporter/pysetenv
 [env]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html

@@ -1,4 +1,4 @@
-import os.path
+import os
 import subprocess
 import sys
 import unittest
@@ -29,6 +29,15 @@ class TestSetEnv(unittest.TestCase):
 
     def assertOutput(self, command, output, *args, **kwargs):
         self.assertEqual(self.assertPopen(command, *args, **kwargs), output)
+
+    @staticmethod
+    def _required_python_vars():
+        # Python requires SYSTEMROOT to be set on some Windows configurations
+        # or it fails with "Fatal Python error: failed to get random numbers to
+        # initialize Python".
+        if 'SYSTEMROOT' in os.environ:
+            return ['SYSTEMROOT={}'.format(os.environ['SYSTEMROOT'])]
+        return []
 
     def test_no_args(self):
         output = self.assertPopen(['pysetenv'])
@@ -108,25 +117,27 @@ class TestSetEnv(unittest.TestCase):
         )
 
     def test_ignore_environment_command(self):
+        extra = self._required_python_vars()
         self.assertOutput(
-            ['pysetenv', '-i', sys.executable, '-c',
-             'import os; print(os.environ.get("PATH"))'],
+            ['pysetenv', '-i'] + extra +
+            [sys.executable, '-c', 'import os; print(os.environ.get("PATH"))'],
             output='None\n'
         )
         self.assertOutput(
-            ['pysetenv', '-i', '--', sys.executable, '-c',
-             'import os; print(os.environ.get("PATH"))'],
+            ['pysetenv', '-i'] + extra + ['--'] +
+            [sys.executable, '-c', 'import os; print(os.environ.get("PATH"))'],
             output='None\n'
         )
 
     def test_ignore_environment_def_varcommand(self):
+        extra = self._required_python_vars()
         self.assertOutput(
-            ['pysetenv', '-i', 'PATH=path', sys.executable, '-c',
-             'import os; print(os.environ["PATH"])'],
+            ['pysetenv', '-i', 'PATH=path'] + extra +
+            [sys.executable, '-c', 'import os; print(os.environ["PATH"])'],
             output='path\n'
         )
         self.assertOutput(
-            ['pysetenv', '-i', 'PATH=path', '--', sys.executable, '-c',
-             'import os; print(os.environ["PATH"])'],
+            ['pysetenv', '-i', 'PATH=path'] + extra + ['--'] +
+            [sys.executable, '-c', 'import os; print(os.environ["PATH"])'],
             output='path\n'
         )
