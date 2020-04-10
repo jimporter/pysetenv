@@ -1,5 +1,5 @@
 [run]
-include = ${TOP}/pysetenv/*
+source = pysetenv
 parallel = True
 branch = True
 
