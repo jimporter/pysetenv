@@ -55,7 +55,7 @@ class TestSetEnv(unittest.TestCase):
 
     def test_undef_var(self):
         output = self.assertPopen(['pysetenv', '-uPATH'])
-        self.assertFalse('PATH={}\n'.format('PATH', os.environ['PATH'])
+        self.assertFalse('PATH={}\n'.format(os.environ['PATH'])
                          in output)
 
         output = self.assertPopen(['pysetenv', '-uPATH', 'PATH=path'])
