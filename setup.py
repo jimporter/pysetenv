@@ -61,12 +61,6 @@ with open(os.path.join(root_dir, 'README.md'), 'r') as f:
     # Read from the file and strip out the badges.
     long_desc = re.sub(r'(^# pysetenv)\n\n(.+\n)*', r'\1', f.read())
 
-try:
-    import pypandoc
-    long_desc = pypandoc.convert_text(long_desc, 'rst', format='md')
-except ImportError:
-    pass
-
 setup(
     name='pysetenv',
     version=version,
@@ -74,6 +68,7 @@ setup(
     description=('A simple tool to set environment variables before running ' +
                  'a command'),
     long_description=long_desc,
+    long_description_content_type='text/markdown',
     keywords='set environment variables',
     url='https://github.com/jimporter/pysetenv',
 
@@ -100,7 +95,6 @@ setup(
     packages=find_packages(exclude=['test', 'test.*']),
 
     extras_require={
-        'dev': ['coverage', 'flake8 >= 3.0', 'pypandoc >= 1.4'],
         'test': ['coverage', 'flake8 >= 3.0'],
     },
 
