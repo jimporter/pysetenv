@@ -122,7 +122,7 @@ setup(
     packages=find_packages(exclude=['test', 'test.*']),
 
     extras_require={
-        'test': ['coverage', 'flake8 >= 3.0'],
+        'test': ['coverage', 'flake8 >= 3.0', 'flake8-quotes'],
     },
 
     entry_points={
