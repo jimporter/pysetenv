@@ -60,8 +60,8 @@ This project is licensed under the [BSD 3-clause license](LICENSE).
 
 [pypi-image]: https://img.shields.io/pypi/v/pysetenv.svg
 [pypi-link]: https://pypi.python.org/pypi/pysetenv
-[ci-image]: https://github.com/jimporter/pysetenv/workflows/build/badge.svg
-[ci-link]: https://github.com/jimporter/pysetenv/actions?query=branch%3Amaster+workflow%3Abuild
+[ci-image]: https://github.com/jimporter/pysetenv/actions/workflows/build.yml/badge.svg
+[ci-link]: https://github.com/jimporter/pysetenv/actions/workflows/build.yml?query=branch%3Amaster
 [codecov-image]: https://codecov.io/gh/jimporter/pysetenv/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/jimporter/pysetenv
 [env]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html
